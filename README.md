@@ -18,7 +18,7 @@ Load images using a [babel macro](https://github.com/kentcdodds/babel-plugin-mac
 
 ## Usage
 
-To use this you must also install and configure [babel-plugin-macros](https://github.com/kentcdodds/babel-plugin-macros).
+To use this you must install and configure [babel-plugin-macros](https://github.com/kentcdodds/babel-plugin-macros).
 
 ```bash
 npm install babel-plugin-media
