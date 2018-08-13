@@ -1,0 +1,19 @@
+{
+  "name": "media.macro",
+  "version": "1.0.0",
+  "description": "Babel macro to load media.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "exit 0"
+  },
+  "keywords": [
+    "babel-plugin-macros",
+    "babel",
+    "plugin",
+    "images",
+    "image",
+    "optimize"
+  ],
+  "author": "Dylan Vann <dylan@dylanvann.com>",
+  "license": "MIT"
+}
