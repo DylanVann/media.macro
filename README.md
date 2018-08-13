@@ -50,8 +50,6 @@ const MyImage = {
   videoPosterWebPSrc: "...",
   videoPosterBase64: "..."
 };
-
-const MyComponent = () => <FastImage {...MyImage} />;
 ```
 
 ### Displaying the Image
