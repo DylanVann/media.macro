@@ -54,7 +54,7 @@ const MyComponent = () => <FastImage {...MyImage} />;
 
 ### Displaying the Image
 
-This macro will work well with `react-fast-image`.
+This macro will work well with [react-fast-image](https://github.com/DylanVann/react-fast-image).
 This is optional though, you can consume the output however you want.
 
 ```js
