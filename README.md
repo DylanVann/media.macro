@@ -59,7 +59,7 @@ const MyComponent = () => <FastImage {...MyImage} />;
 This macro will work well with [react-fast-image](https://github.com/DylanVann/react-fast-image).
 This is optional though, you can consume the output however you want.
 
-```js
+```jsx
 import FastImage from "react-fast-image";
 import media from "media.macro";
 
