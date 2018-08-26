@@ -1,6 +1,7 @@
 import crypto from 'crypto'
-import fs from '../../../Library/Caches/typescript/2.9/node_modules/@types/fs-extra'
 import path from 'path'
+import fs from 'fs-extra'
+import Big from 'big.js'
 
 const baseEncodeTables = {
   26: 'abcdefghijklmnopqrstuvwxyz',
@@ -13,13 +14,16 @@ const baseEncodeTables = {
   64: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_'
 }
 
-function encodeBufferToBase (buffer, base) {
+type Base = keyof typeof baseEncodeTables
+type HashName = 'sha1' | 'md5' | 'sha256' | 'sha512'
+type DigestName = 'hex' | 'base26' | 'base32' | 'base36' | 'base49' | 'base52' | 'base58' | 'base62' | 'base64'
+
+function encodeBufferToBase (buffer: Buffer, base: Base) {
   const encodeTable = baseEncodeTables[base]
   if (!encodeTable) throw new Error('Unknown encoding base' + base)
 
   const readLength = buffer.length
 
-  const Big = require('../../../Library/Caches/typescript/2.9/node_modules/@types/big.js')
   Big.RM = Big.DP = 0
   let b = new Big(0)
   for (let i = readLength - 1; i >= 0; i--) {
@@ -28,7 +32,8 @@ function encodeBufferToBase (buffer, base) {
 
   let output = ''
   while (b.gt(0)) {
-    output = encodeTable[b.mod(base)] + output
+    const key = b.mod(base) as any as number
+    output = encodeTable[key] + output
     b = b.div(base)
   }
 
@@ -38,13 +43,14 @@ function encodeBufferToBase (buffer, base) {
   return output
 }
 
-function hash (filePath, hashName, digestType, maxLength) {
+function hash (filePath: string, hashName: HashName, digestType: DigestName, maxLength: number) {
   hashName = hashName || 'md5'
   maxLength = maxLength || 128
 
   const contents = fs.readFileSync(filePath)
   const hasher = crypto.createHash(hashName).update(contents)
 
+  const base =  digestType.substr(4) as any as Base
   if (
     digestType === 'base26' ||
     digestType === 'base32' ||
@@ -55,7 +61,7 @@ function hash (filePath, hashName, digestType, maxLength) {
     digestType === 'base62' ||
     digestType === 'base64'
   ) {
-    return encodeBufferToBase(hasher.digest(), digestType.substr(4)).substr(
+    return encodeBufferToBase(hasher.digest(), base).substr(
       0,
       maxLength
     )
@@ -64,7 +70,14 @@ function hash (filePath, hashName, digestType, maxLength) {
   }
 }
 
-export default (rootPath, filePath, opts) => {
+interface Options {
+    name: string
+    outputPath: string
+    publicPath: string
+    context: string
+}
+
+export default (rootPath: string, filePath: string, opts: Options) => {
   let url = opts.name
   let ext = 'bin'
   let basename = 'file'
@@ -104,7 +117,7 @@ export default (rootPath, filePath, opts) => {
 
   url = url.replace(
     /\[(?:([^:]+):)?hash(?::([a-z]+\d*))?(?::(\d+))?\]/gi,
-    (_, hashType, digestType, maxLength) =>
+    (_: string, hashType: HashName, digestType: DigestName, maxLength: string) =>
       hash(filePath, hashType, digestType, parseInt(maxLength, 10))
   )
 

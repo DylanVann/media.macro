@@ -15,5 +15,14 @@
     "optimize"
   ],
   "author": "Dylan Vann <dylan@dylanvann.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "big.js": "^5.1.2",
+    "fs-extra": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/big.js": "^4.0.5",
+    "@types/fs-extra": "^5.0.4",
+    "@types/node": "^10.9.2"
+  }
 }
