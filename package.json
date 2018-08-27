@@ -4,6 +4,7 @@
   "description": "Babel macro to load media.",
   "main": "dist/index.js",
   "scripts": {
+    "build": "tsc",
     "test": "jest"
   },
   "keywords": [
@@ -43,6 +44,7 @@
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
     "modulePathIgnorePatterns": [
+      "<rootDir>/dist",
       "<rootDir>/example"
     ],
     "moduleFileExtensions": [
