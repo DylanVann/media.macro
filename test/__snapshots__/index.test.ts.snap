@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`index should replace require statements in react components 1`] = `
+"const React = require('react');
+
+export default class extends React.Component {
+    render() {
+        return React.createElement('img', { src: '/public/64eababb117f90535085779cc0325003.svg' });
+    }
+}"
+`;

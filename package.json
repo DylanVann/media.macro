@@ -1,60 +1,69 @@
 {
-  "name": "media.macro",
-  "version": "1.0.0",
-  "description": "Babel macro to load media.",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "test": "jest"
-  },
-  "keywords": [
-    "babel-plugin-macros",
-    "babel",
-    "plugin",
-    "images",
-    "image",
-    "optimize"
-  ],
-  "author": "Dylan Vann <dylan@dylanvann.com>",
-  "license": "MIT",
-  "dependencies": {
-    "big.js": "^5.1.2",
-    "fs-extra": "^7.0.0"
-  },
-  "devDependencies": {
-    "@types/babel-core": "^6.25.5",
-    "@types/big.js": "^4.0.5",
-    "@types/chai": "^4.1.4",
-    "@types/fs-extra": "^5.0.4",
-    "@types/jest": "^23.3.1",
-    "@types/node": "^10.9.2",
-    "@types/rimraf": "^2.0.2",
-    "babel-core": "^6.26.3",
-    "babel-preset-react": "^6.24.1",
-    "chai": "^4.1.2",
-    "jest": "^23.5.0",
-    "rimraf": "^2.6.2",
-    "ts-jest": "^23.1.4",
-    "ts-node": "^7.0.1",
-    "typescript": "^3.0.1"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
+    "name": "media.macro",
+    "version": "1.0.0",
+    "description": "Babel macro to load media.",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "format": "prettier --write '**/*.{js,jsx,ts,tsx,md,json,css,html}'",
+        "build": "tsc",
+        "test": "jest"
     },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "modulePathIgnorePatterns": [
-      "<rootDir>/dist",
-      "<rootDir>/example"
+    "keywords": [
+        "babel-plugin-macros",
+        "babel",
+        "plugin",
+        "images",
+        "image",
+        "optimize"
     ],
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
-  }
+    "author": "Dylan Vann <dylan@dylanvann.com>",
+    "license": "MIT",
+    "dependencies": {
+        "big.js": "^5.1.2",
+        "fs-extra": "^7.0.0"
+    },
+    "devDependencies": {
+        "@types/babel-core": "^6.25.5",
+        "@types/big.js": "^4.0.5",
+        "@types/chai": "^4.1.4",
+        "@types/fs-extra": "^5.0.4",
+        "@types/jest": "^23.3.1",
+        "@types/node": "^10.9.2",
+        "@types/rimraf": "^2.0.2",
+        "babel-core": "^6.26.3",
+        "babel-preset-react": "^6.24.1",
+        "chai": "^4.1.2",
+        "jest": "^23.5.0",
+        "prettier": "^1.14.2",
+        "rimraf": "^2.6.2",
+        "ts-jest": "^23.1.4",
+        "ts-node": "^7.0.1",
+        "typescript": "^3.0.1"
+    },
+    "jest": {
+        "transform": {
+            "^.+\\.tsx?$": "ts-jest"
+        },
+        "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+        "modulePathIgnorePatterns": [
+            "<rootDir>/dist",
+            "<rootDir>/example"
+        ],
+        "moduleFileExtensions": [
+            "ts",
+            "tsx",
+            "js",
+            "jsx",
+            "json",
+            "node"
+        ]
+    },
+    "prettier": {
+        "trailingComma": "all",
+        "semi": false,
+        "singleQuote": true,
+        "printWidth": 100,
+        "tabWidth": 4
+    }
 }
