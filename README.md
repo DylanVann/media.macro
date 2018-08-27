@@ -21,9 +21,9 @@ Load images using a [babel macro](https://github.com/kentcdodds/babel-plugin-mac
 To use this you must install and configure [babel-plugin-macros](https://github.com/kentcdodds/babel-plugin-macros).
 
 ```bash
-npm install babel-plugin-media
+npm install media.macro
 # or
-yarn add babel-plugin-media
+yarn add media.macro
 ```
 
 ### Input
@@ -68,6 +68,9 @@ const MyComponent = () => <FastImage {...media('./my-image.png')} />
 
 You can pass options to the `media` macro.
 
+Two important options are `outputPath` and `publicPath`.
+These options determine where the output media files go in the file tree, and how to build the URL for them.
+
 ```js
 import media from 'media.macro'
 
@@ -76,6 +79,9 @@ const MyImage = media('./my-image.png', {
     toImgFormat: 'png',
     toVideoFormat: 'mp4',
     toVideoPosterFormat: 'png',
+    // For create-react-app these could be:
+    outputPath: 'public/static',
+    publicPath: 'static',
 })
 ```
 
