@@ -6,7 +6,7 @@ const options = {
 }
 
 module.exports = (config, env) => {
-    config = injectBabelPlugin('babel-plugin-macros', config)
+    config = injectBabelPlugin('macros', config)
     config = injectBabelPlugin(['media.macro', options], config)
     return config
 }

@@ -20,6 +20,7 @@
     "author": "Dylan Vann <dylan@dylanvann.com>",
     "license": "MIT",
     "dependencies": {
+        "babel-plugin-macros": "^2.4.0",
         "big.js": "^5.1.2",
         "fs-extra": "^7.0.0"
     },
