@@ -186,7 +186,15 @@ describe('index', function() {
 
     it('should replace require statements in react components', function() {
         const result = transformCode(getFixtures('require-react.js'), {}).code
-        expect(result).toMatchSnapshot()
+        expect(result).toMatchInlineSnapshot(`
+"const React = require('react');
+
+export default class extends React.Component {
+    render() {
+        return React.createElement('img', { src: '/public/64eababb117f90535085779cc0325003.svg' });
+    }
+}"
+`)
     })
 
     it('should do nothing when imports have no extensions', function() {
