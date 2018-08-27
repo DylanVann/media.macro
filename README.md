@@ -1,4 +1,4 @@
-# media.macro
+# media.macro [![CircleCI](https://circleci.com/gh/DylanVann/media.macro.svg?style=svg)](https://circleci.com/gh/DylanVann/media.macro)
 
 Load images using a [babel macro](https://github.com/kentcdodds/babel-plugin-macros).
 
