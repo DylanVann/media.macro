@@ -1,8 +1,8 @@
-import path from 'path'
-import fs from 'fs'
-import chai from 'chai'
+import * as path from 'path'
+import * as fs from 'fs'
+import * as chai from 'chai'
+import * as rimraf from 'rimraf'
 import transformCode from './transformCode'
-import rimraf from 'rimraf'
 
 function getFixtures(name: string) {
     return path.resolve(__dirname, 'fixtures', name)
