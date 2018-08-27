@@ -1,7 +1,15 @@
 import { dirname, extname, resolve } from 'path'
 import transform from './transform'
 
-export const defaultOptions = {
+interface Options {
+    name: string
+    outputPath: string
+    publicPath: string
+    context: string
+    extensions: string[]
+}
+
+export const defaultOptions: Options = {
   name: '[hash].[ext]',
   outputPath: '/public',
   publicPath: '/public',
@@ -22,12 +30,13 @@ const getVariableName = (p: Variable) => {
 }
 
 interface State {
-  opts: {
-  }
-  file: { opts: {
-  filename: string
-          sourceRoot?: string
-  } }
+    opts: Options
+    file: {
+        opts: {
+            filename: string
+            sourceRoot?: string
+        }
+    }
 }
 
 const applyTransform = (p: any, t: any, state: State, value: string, calleeName: string) => {
