@@ -4,7 +4,7 @@
   "description": "Babel macro to load media.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "exit 0"
+    "test": "jest"
   },
   "keywords": [
     "babel-plugin-macros",
@@ -21,8 +21,37 @@
     "fs-extra": "^7.0.0"
   },
   "devDependencies": {
+    "@types/babel-core": "^6.25.5",
     "@types/big.js": "^4.0.5",
+    "@types/chai": "^4.1.4",
     "@types/fs-extra": "^5.0.4",
-    "@types/node": "^10.9.2"
+    "@types/jest": "^23.3.1",
+    "@types/node": "^10.9.2",
+    "@types/rimraf": "^2.0.2",
+    "babel-core": "^6.26.3",
+    "babel-preset-react": "^6.24.1",
+    "chai": "^4.1.2",
+    "jest": "^23.5.0",
+    "rimraf": "^2.6.2",
+    "ts-jest": "^23.1.4",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.1"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   }
 }

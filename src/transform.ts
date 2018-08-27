@@ -44,30 +44,28 @@ function encodeBufferToBase (buffer: Buffer, base: Base) {
 }
 
 function hash (filePath: string, hashName: HashName, digestType: DigestName, maxLength: number) {
-  hashName = hashName || 'md5'
-  maxLength = maxLength || 128
-
+    hashName = hashName || 'md5'
+    digestType = digestType || 'hex'
+    maxLength = maxLength || 128
   const contents = fs.readFileSync(filePath)
   const hasher = crypto.createHash(hashName).update(contents)
-
-  const base =  digestType.substr(4) as any as Base
+  let name
   if (
-    digestType === 'base26' ||
-    digestType === 'base32' ||
-    digestType === 'base36' ||
-    digestType === 'base49' ||
-    digestType === 'base52' ||
-    digestType === 'base58' ||
-    digestType === 'base62' ||
-    digestType === 'base64'
+      digestType === 'base26' ||
+      digestType === 'base32' ||
+      digestType === 'base36' ||
+      digestType === 'base49' ||
+      digestType === 'base52' ||
+      digestType === 'base58' ||
+      digestType === 'base62' ||
+      digestType === 'base64'
   ) {
-    return encodeBufferToBase(hasher.digest(), base).substr(
-      0,
-      maxLength
-    )
+      const base =  digestType.substr(4) as any as Base
+      name = encodeBufferToBase(hasher.digest(), base)
   } else {
-    return hasher.digest(digestType || 'hex').substr(0, maxLength)
+      name = hasher.digest(digestType)
   }
+  return name.substr(0, maxLength)
 }
 
 interface Options {

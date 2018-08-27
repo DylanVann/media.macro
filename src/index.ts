@@ -9,13 +9,28 @@ export const defaultOptions = {
   extensions: ['gif', 'jpeg', 'jpg', 'png', 'svg']
 }
 
-const getVariableName = p => {
+interface Variable {
+   node: {
+     specifiers?: Array<{ local: { name: string }}>
+   }
+}
+
+const getVariableName = (p: Variable) => {
   if (p.node.specifiers && p.node.specifiers[0] && p.node.specifiers[0].local) {
     return p.node.specifiers[0].local.name
   }
 }
 
-const applyTransform = (p, t, state, value, calleeName) => {
+interface State {
+  opts: {
+  }
+  file: { opts: {
+  filename: string
+          sourceRoot?: string
+  } }
+}
+
+const applyTransform = (p: any, t: any, state: State, value: string, calleeName: string) => {
   const ext = extname(value)
   const options = Object.assign({}, defaultOptions, state.opts)
 
@@ -49,13 +64,13 @@ const applyTransform = (p, t, state, value, calleeName) => {
   }
 }
 
-export function transformImportsInline ({ types: t }) {
+export function transformImportsInline ({ types: t }: { types: any}) {
   return {
     visitor: {
-      ImportDeclaration (p, state) {
+      ImportDeclaration (p: any, state: State) {
         applyTransform(p, t, state, p.node.source.value, 'import')
       },
-      CallExpression (p, state) {
+      CallExpression (p: any, state: State) {
         const callee = p.get('callee')
         if (!callee.isIdentifier() || !callee.equals('name', 'require')) {
           return
