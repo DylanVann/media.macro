@@ -40,11 +40,14 @@ const MyImage = media('./my-image.png')
 const MyImage = {
     height: 100,
     width: 100,
+    // included if the file is an image
+    imgBase64: '...',
     imgSrc: '...',
     imgWebPSrc: '...',
     imgSrcSet: '...',
     imgWebPSrcSet: '...',
     imgBase64: '...',
+    // included if the file is a video
     videoSrc: '...',
     videoPosterSrc: '...',
     videoPosterWebPSrc: '...',
@@ -83,6 +86,21 @@ const MyImage = media('./my-image.png', {
     outputPath: 'public/static',
     publicPath: 'static',
 })
+```
+
+### Global Options
+
+Since you probably want the options set globally for this macro you can use `babel-plugin-macros.config.js` to configure it as well.
+This should be in the same directory as your `.babelrc.js` file.
+
+```js
+// babel-plugin-macros.config.js
+module.exports = {
+    media: {
+        publicPath: 'static',
+        outputPath: 'public/static',
+    },
+}
 ```
 
 ## License
