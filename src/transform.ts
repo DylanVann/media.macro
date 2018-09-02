@@ -77,21 +77,21 @@ function hash(filePath: string, hashName: HashName, digestType: DigestName, maxL
     return name.substr(0, maxLength)
 }
 
-interface Options {
+export interface TransformConfig {
     name: string
     outputPath: string
     publicPath: string
     context: string
 }
 
-export default (rootPath: string, filePath: string, opts: Options) => {
-    let url = opts.name
+const transform = (rootPath: string, filePath: string, config: TransformConfig): string => {
+    let url = config.name
     let ext = 'bin'
     let basename = 'file'
     let directory = ''
-    let outputPath = opts.outputPath
-    let publicPath = opts.publicPath.replace(/\/$/, '')
-    let context = opts.context[0] == '/' ? opts.context.substr(1) : opts.context
+    let outputPath = config.outputPath
+    let publicPath = config.publicPath.replace(/\/$/, '')
+    let context = config.context[0] == '/' ? config.context.substr(1) : config.context
     let contextPath = path.resolve(rootPath, context)
 
     if (!fs.existsSync(filePath)) {
@@ -132,3 +132,5 @@ export default (rootPath: string, filePath: string, opts: Options) => {
 
     return publicPath + '/' + url
 }
+
+export default transform

@@ -1,13 +1,14 @@
+import * as fs from 'fs'
 import * as path from 'path'
 import { NodePath, Binding } from 'babel-traverse'
 // @ts-ignore
 import { createMacro, MacroError } from 'babel-plugin-macros'
 // @ts-ignore
 import pkg from '../package.json'
-
-const getDataUri = (filePath: string) => {
-    return `mock`
-}
+import * as t from 'babel-types'
+import transform, { TransformConfig } from './transform'
+import { defaultOptions } from '.'
+import { ImageProps } from './types'
 
 interface Node {
     parentPath: NodePath
@@ -23,14 +24,14 @@ interface Options {
         file: {
             opts: {
                 filename: string
+                root: string
             }
         }
     }
     babel: {
-        types: {
-            stringLiteral: (node: any) => any
-        }
+        types: typeof t
     }
+    config: TransformConfig
 }
 
 const checkReferences = (references: References) => {
@@ -66,7 +67,7 @@ const checkIsDefault = (path: NodePath) => {
     }
 }
 
-const getFilePath = (path: NodePath) => {
+const getFilePath = (path: NodePath): string => {
     if (path.isStringLiteral()) {
         return (path.node.value as any) as string
     } else if (path.isIdentifier()) {
@@ -82,23 +83,43 @@ const getFilePath = (path: NodePath) => {
     }
 }
 
-const dataUriMacro = ({
-    references,
-    state: {
+const objectToExpression = (object: object) =>
+    Object.entries(object).map(([key, value]) =>
+        t.objectProperty(t.stringLiteral(key), t.stringLiteral(value)),
+    )
+
+const dataUriMacro = ({ references, state, babel, config }: Options) => {
+    const {
         file: {
             opts: { filename },
         },
-    },
-    babel: { types },
-}: Options) => {
+    } = state
+    const { types: t } = babel
     checkReferences(references)
     references.default.forEach(({ parentPath: dataUriCall }) => {
         checkCall(dataUriCall)
         const convertee: NodePath = (dataUriCall.get('arguments.0') as any) as NodePath
         const filePath = getFilePath(convertee)
-        const requestedFile = path.resolve(path.dirname(filename), filePath)
-        dataUriCall.replaceWith(types.stringLiteral(getDataUri(requestedFile)))
+        const filePathAbsolute = path.resolve(path.dirname(filename), filePath)
+        const fileExists = fs.existsSync(filePathAbsolute)
+        if (!fileExists) throw new MacroError(`media.macro could not resolve: ${filePath}`)
+        const root = state.file.opts.root
+        const mergedConfig = {
+            ...defaultOptions,
+            ...config,
+        }
+        const resultPath = transform(root, filePathAbsolute, mergedConfig)
+        const mediaData: ImageProps = {
+            imgSrc: resultPath,
+            imgSrcSet: resultPath,
+            imgWebPSrc: resultPath,
+            imgWebPSrcSet: resultPath,
+            imgBase64: resultPath,
+        }
+        dataUriCall.replaceWith(t.objectExpression(objectToExpression(mediaData)))
     })
 }
 
-export default createMacro(dataUriMacro)
+const configName = 'media'
+
+export default createMacro(dataUriMacro, { configName })
